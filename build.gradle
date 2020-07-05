@@ -1,0 +1,28 @@
+plugins {
+    id 'org.jetbrains.kotlin.jvm' version '1.3.72' apply false
+}
+
+ext {
+    gradleScript = { String scriptName -> [from: file( "gradle-scripts/${scriptName}.gradle" )] }
+}
+
+if (System.getProperty( 'idea.active' )) {
+    //using intellij
+    allprojects {
+        apply plugin: 'idea'
+        idea {
+            module {
+                outputDir = new File( buildDir, 'intellij/production' )
+                testOutputDir = new File(buildDir, 'intellij/test' )
+            }
+        }
+    }
+} else if (new File( rootDir, '.idea' ).exists()) {
+    //using intellij, but its not the ide running this build
+} else {
+    //using eclipse
+    allprojects {
+        apply plugin: 'eclipse'
+    }
+}
+

@@ -1,0 +1,11 @@
+apply gradleScript('kotlin-jvm')
+
+group 'com.github.aarjavp.brick'
+version '0.1.0'
+description 'core project which has logic for game rules and state'
+
+dependencies {
+    api 'org.apache.logging.log4j:log4j-api:2.13.3'
+}
+
+

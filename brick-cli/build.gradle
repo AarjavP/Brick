@@ -1,0 +1,15 @@
+apply gradleScript('kotlin-jvm')
+apply gradleScript('log4j2')
+
+group 'com.github.aarjavp.brick'
+version '0.1.0'
+description 'A command line interface to brick-core, allowing a hotseat / \'split screen\' playability of the game'
+
+configurations {
+    implementation.extendsFrom logImpl
+}
+
+dependencies {
+    api parent.project('brick-core')
+    api 'com.github.ajalt:clikt:2.7.1'
+}

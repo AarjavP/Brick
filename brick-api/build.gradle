@@ -1,0 +1,16 @@
+apply gradleScript('kotlin-jvm')
+apply gradleScript('log4j2')
+
+group 'com.github.aarjavp.brick'
+version '0.1.0'
+description 'A restful-ish web API to brick-core, to allow multiple clients to play the same game'
+
+configurations {
+    implementation.extendsFrom logImpl
+}
+
+dependencies {
+    api parent.project('brick-core')
+    api 'com.github.ajalt:clikt:2.7.1'
+    api 'io.javalin:javalin:3.9.0'
+}
