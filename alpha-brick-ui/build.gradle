@@ -1,0 +1,38 @@
+plugins {
+  id 'base'
+  id 'com.github.node-gradle.node' version '2.2.4'
+}
+
+group = 'com.github.aarjavp.brick'
+version = new groovy.json.JsonSlurper().parseText(file('package.json').text)["version"]
+
+node {
+  download = true
+  version = file('.nvmrc').text.trim() // this is the node version
+  yarnVersion = '1.22.4'
+
+  File nodejsBinariesCacheDir = new File( gradle.gradleUserHomeDir, 'nodejsBinariesCache' )
+  nodejsBinariesCacheDir.mkdirs()
+  workDir = new File(nodejsBinariesCacheDir, 'nodejs')
+  npmWorkDir = new File(nodejsBinariesCacheDir, 'npm')
+  yarnWorkDir = new File(nodejsBinariesCacheDir, 'yarn')
+}
+
+task nuxtClean(type: Delete) {
+  delete file('dist')
+}
+clean.dependsOn nuxtClean
+
+afterEvaluate {
+  println( 'Using nodejs-' + node.version )
+}
+
+task jar(type: Jar, dependsOn: ['yarn_install', 'yarn_run_generate']) {
+  archiveBaseName.set project.name
+  archiveVersion.set project.version as String
+  destinationDirectory.set file("$buildDir/libs")
+  from('dist') {
+    into 'META-INF/resources'
+  }
+}
+assemble.dependsOn jar

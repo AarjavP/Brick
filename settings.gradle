@@ -2,3 +2,4 @@
 include 'brick-core'
 include 'brick-cli'
 include 'brick-api'
+include 'alpha-brick-ui'
